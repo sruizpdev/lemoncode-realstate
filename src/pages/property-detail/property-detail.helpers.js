@@ -11,7 +11,7 @@ const setMainFeatures = property => {
 const setEquipments = property => {
   const list = document.getElementById('equipments');
 
-  property.equipmentIds.forEach(equipment => {
+  property.equipment.forEach(equipment => {
     const li = document.createElement('li');
     li.textContent = equipment;
     list.appendChild(li);

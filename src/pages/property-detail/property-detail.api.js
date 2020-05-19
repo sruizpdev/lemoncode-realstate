@@ -1,10 +1,8 @@
 import Axios from 'axios';
 
-const url = `${process.env.BASE_API_URL}`;
+const url = `${process.env.BASE_API_URL}/equipments`;
 
-
-getPropertiesList().then((propertiesList) => {
-    const viewModelPropertyList = mapPropertyListFromApiToVM(propertiesList);
-    addPropertyRows(viewModelPropertyList);
-    console.log(propertiesList);
-});
+export const getEquipmentsList = () =>
+    Axios.get(url).then(response => {
+        return response.data;
+    }); 

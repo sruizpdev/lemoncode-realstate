@@ -1,7 +1,5 @@
 export const mapPropertyFromApiToVM = property => {
     return {
-        ...property,
-        rooms: `${property.rooms} habitaciones`,
 
         // id: property.id,
         // mainImage: property.mainImage,
