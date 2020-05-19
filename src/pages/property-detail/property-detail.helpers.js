@@ -11,7 +11,7 @@ const setMainFeatures = property => {
 const setEquipments = property => {
   const list = document.getElementById('equipments');
 
-  property.equipments.forEach(equipment => {
+  property.equipmentIds.forEach(equipment => {
     const li = document.createElement('li');
     li.textContent = equipment;
     list.appendChild(li);
@@ -76,8 +76,9 @@ const getOverlayImage = (image, id) => {
 };
 
 export const setPropertyValues = property => {
+
   const mainImage = document.getElementById('mainImage');
-  mainImage.src = property.mainImage;
+  mainImage.src = property.images[0];
 
   const title = document.getElementById('title');
   title.textContent = property.title;
