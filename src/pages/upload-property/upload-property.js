@@ -115,6 +115,18 @@ onUpdateField('notes', (event) => {
     });
 });
 
+onUpdateField('province', (event) => {
+    const value = event.target.value;
+    newProperty = {
+        ...newProperty,
+        provinceId: value
+    };
+    console.log(newProperty);
+    formValidation.validateField('province', newProperty.provinceId).then(result => {
+        onSetError('province', result);
+    });
+});
+
 onUpdateField('email', (event) => {
     const value = event.target.value;
     newProperty = {
@@ -165,10 +177,37 @@ onSubmitForm('save-button', () => {
 
 let newF = '';
 let newArray = [];
+let arrayEquipment = [];
+let arraySaleTypes = [];
 
 onUpdateField('newFeature', (event) => {
     newF = event.target.value;
 });
+onUpdateField('equipments', (event) => {
+    const value = event.target.value;
+    if (arrayEquipment.includes(value)) {
+        arrayEquipment.splice(arrayEquipment.indexOf(value), 1)
+    } else {
+        arrayEquipment.push(value);
+    }
+    newProperty = {
+        ...newProperty,
+        equipmentIds: arrayEquipment
+    };
+});
+onUpdateField('saleTypes', (event) => {
+    const value = event.target.value;
+    if (arraySaleTypes.includes(value)) {
+        arraySaleTypes.splice(arraySaleTypes.indexOf(value), 1)
+    } else {
+        arraySaleTypes.push(value);
+    }
+    newProperty = {
+        ...newProperty,
+        saleTypeIds: arraySaleTypes
+    };
+});
+
 onSubmitForm('insert-feature-button', () => {
     newArray.push(newF);
     console.log(newArray);
@@ -186,6 +225,8 @@ getSaleTypes().then(saleTypesList => {
     setCheckboxList(saleTypesList, 'saleTypes');
     getEquipList().then(equipList => {
         setCheckboxList(equipList, 'equipments');
+
+
     })
 });
 
