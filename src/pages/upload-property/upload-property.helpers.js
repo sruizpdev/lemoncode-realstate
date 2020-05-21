@@ -88,7 +88,9 @@ export const onAddImage = image => {
   imageContainerElement.classList.add('add_img');
 
   const imageElement = document.createElement('img');
-  imageElement.src = image;
+  console.log(imageElement);
+
+  imageElement.src = image; console.log(imageElement);
 
   imageContainerElement.appendChild(imageElement);
   imagesElement.insertBefore(imageContainerElement, addImageButton);

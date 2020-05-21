@@ -2,93 +2,130 @@ import { formValidation } from './upload-property.validation';
 import { history, routes } from '../../core/router';
 import { onUpdateField, onSubmitForm, onSetError, onSetFormErrors } from '../../common/helpers';
 import { insertProperty, getSaleTypes, getEquipList } from './upload-property.api';
-import { setCheckboxList } from './upload-property.helpers';
+import { setCheckboxList, setOptionList, onAddFeature, onAddImage } from './upload-property.helpers';
+import { getProvincesList } from '../property-list/property-list.api';
 
 
 
-let formu = {
+let newProperty = {
+    id: '',
     title: '',
     notes: '',
     email: '',
-    phone: ''
-};
+    phone: '',
+    price: '',
+    saleTypeIds: [],
+    address: '',
+    city: '',
+    provinceId: '',
+    squareMeter: '',
+    rooms: '',
+    bathrooms: '',
+    locationUrl: '',
+    mainFeatures: [],
+    equipmentIds: [],
+    images: []
+
+
+}
+
 
 onUpdateField('title', (event) => {
     const value = event.target.value;
-    formu = {
-        ...formu,
+    newProperty = {
+        ...newProperty,
         title: value
     };
+    console.log(newProperty);
 
-    formValidation.validateField('title', formu.title).then(result => {
+
+    formValidation.validateField('title', newProperty.title).then(result => {
         onSetError('title', result);
     });
 });
 onUpdateField('notes', (event) => {
     const value = event.target.value;
-    formu = {
-        ...formu,
+    newProperty = {
+        ...newProperty,
         notes: value
     };
-
-    formValidation.validateField('notes', formu.notes).then(result => {
+    console.log(newProperty);
+    formValidation.validateField('notes', newProperty.notes).then(result => {
         onSetError('notes', result);
     });
 });
 
 onUpdateField('email', (event) => {
     const value = event.target.value;
-    formu = {
-        ...formu,
+    newProperty = {
+        ...newProperty,
         email: value
     };
 
-    formValidation.validateField('email', formu.email).then(result => {
+    formValidation.validateField('email', newProperty.email).then(result => {
         onSetError('email', result);
     });
 });
 onUpdateField('phone', (event) => {
     const value = event.target.value;
-    formu = {
-        ...formu,
+    newProperty = {
+        ...newProperty,
         email: value
     };
 
-    formValidation.validateField('phone', formu.phone).then(result => {
+    formValidation.validateField('phone', newProperty.phone).then(result => {
         onSetError('phone', result);
     });
 });
 onUpdateField('price', (event) => {
     const value = event.target.value;
-    formu = {
-        ...formu,
+    newProperty = {
+        ...newProperty,
         price: value
     };
 
-    formValidation.validateField('price', formu.price).then(result => {
+    formValidation.validateField('price', newProperty.price).then(result => {
         onSetError('price', result);
     });
 });
 onSubmitForm('save-button', () => {
-    console.log(formu);
+    console.log(newProperty);
 
-    formValidation.validateForm(formu).then(result => {
+    formValidation.validateForm(newProperty).then(result => {
         onSetFormErrors(result);
 
         if (result.succeeded) {
-            insertProperty(formu).then(() => { history.push(routes.propertyList) });
+            insertProperty(newProperty).then(() => { history.push(routes.propertyList) });
         }
     });
 
 
 });
+let newFeature = '';
+onUpdateField('newFeature', (event) => {
+    newFeature = event.target.value;
+
+});
+onSubmitForm('insert-feature-button', () => {
+    if (newFeature != '') {
+        onAddFeature(newFeature);
+    }
+});
+
+getProvincesList().then(provinceList => {
+    setOptionList(provinceList, 'province');
+});
 
 getSaleTypes().then(saleTypesList => {
-
     setCheckboxList(saleTypesList, 'saleTypes');
     getEquipList().then(equipList => {
         setCheckboxList(equipList, 'equipments');
-
-
     })
 });
+
+onUpdateField('add-image', (event) => {
+    onAddImage(event.target.value);
+    insertProperty(newProperty);
+});
+
+

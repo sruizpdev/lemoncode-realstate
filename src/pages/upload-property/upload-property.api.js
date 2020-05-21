@@ -11,3 +11,5 @@ export const getSaleTypes = () =>
 
 export const getEquipList = () =>
     Axios.get(urlEquipList).then(({ data }) => data);
+
+
