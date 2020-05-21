@@ -1,7 +1,9 @@
 import { formValidation } from './upload-property.validation';
 import { history, routes } from '../../core/router';
 import { onUpdateField, onSubmitForm, onSetError, onSetFormErrors } from '../../common/helpers';
-import { insertProperty } from './upload-property.api';
+import { insertProperty, getSaleTypes, getEquipList } from './upload-property.api';
+import { setCheckboxList } from './upload-property.helpers';
+
 
 
 let formu = {
@@ -79,4 +81,14 @@ onSubmitForm('save-button', () => {
     });
 
 
+});
+
+getSaleTypes().then(saleTypesList => {
+
+    setCheckboxList(saleTypesList, 'saleTypes');
+    getEquipList().then(equipList => {
+        setCheckboxList(equipList, 'equipments');
+
+
+    })
 });
